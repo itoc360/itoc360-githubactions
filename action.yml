@@ -1,0 +1,64 @@
+name: "ITOC360 Alert"
+description: "Raise and resolve ITOC360 alerts from a workflow, routing them to your on-call schedules and escalation policies."
+author: "ITOC360 INC"
+
+branding:
+  icon: bell
+  color: blue
+
+inputs:
+  token:
+    description: "ITOC360 source token. Store it as a repository secret and pass it as ${{ secrets.ITOC360_TOKEN }}."
+    required: true
+
+  status:
+    description: 'Whether to raise or clear the alert: "alert" or "resolve".'
+    required: false
+    default: alert
+
+  severity:
+    description: 'Urgency of the alert: "critical", "high", "medium" or "low". ITOC360 maps it to the alert priority.'
+    required: false
+    default: high
+
+  title:
+    description: "One-line alert title. Defaults to the workflow and branch that raised it."
+    required: false
+
+  message:
+    description: "Longer description. Defaults to the repository, commit, actor and a link to the run."
+    required: false
+
+  fingerprint:
+    description: >-
+      Deduplication key. ITOC360 groups events sharing a fingerprint into one alert, so the
+      resolving event must carry the same value as the raising one. Defaults to
+      "<owner>/<repo>::<workflow>::<ref>", which is stable across runs.
+    required: false
+
+  base-url:
+    description: "ITOC360 API base URL. Only set this for a self-hosted deployment."
+    required: false
+    default: https://api.itoc360.app
+
+  timeout:
+    description: "Milliseconds to wait for the request."
+    required: false
+    default: "10000"
+
+  fail-on-error:
+    description: >-
+      Whether the step fails when the alert cannot be delivered. Set it to false to keep a
+      delivery problem from failing an otherwise healthy workflow.
+    required: false
+    default: "true"
+
+outputs:
+  event-id:
+    description: "Identifier of the event ITOC360 recorded."
+  event-type:
+    description: '"ALERT" for a raised alert, "RESOLVE" for a cleared one.'
+
+runs:
+  using: node24
+  main: dist/index.js

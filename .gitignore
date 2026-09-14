@@ -1,0 +1,21 @@
+# Dependencies
+node_modules/
+
+# Tooling caches
+coverage/
+.eslintcache
+.mypy_cache/
+*.tsbuildinfo
+
+# Editor and OS files
+.DS_Store
+.idea/
+.vscode/
+
+# Local environment — never commit tokens
+.env
+.env.*
+
+# NOTE: dist/ is intentionally NOT ignored. GitHub runs an action straight from
+# the repository without installing anything, so the bundled output has to be
+# committed alongside the source.

@@ -1,0 +1,38 @@
+{
+  "name": "itoc360-action",
+  "version": "1.0.0",
+  "private": true,
+  "description": "GitHub Action that raises and resolves ITOC360 alerts from a workflow",
+  "license": "Apache-2.0",
+  "author": "ITOC360 INC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/itoc360/itoc360-action.git"
+  },
+  "type": "module",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "build": "ncc build src/index.ts -o dist --minify --target es2022",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint .",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "test": "vitest run",
+    "verify": "npm run typecheck && npm run lint && npm run format:check && npm run test && npm run build"
+  },
+  "dependencies": {
+    "@actions/core": "^3.0.1",
+    "@itoc360/sdk": "^0.1.0"
+  },
+  "devDependencies": {
+    "@types/node": "^26.5.0",
+    "@vercel/ncc": "^0.45.0",
+    "eslint": "^10.10.0",
+    "prettier": "^3.9.6",
+    "typescript": "^6.0.3",
+    "typescript-eslint": "^8.70.0",
+    "vitest": "^5.0.0"
+  }
+}
